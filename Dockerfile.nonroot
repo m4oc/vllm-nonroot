@@ -2,6 +2,8 @@
 # Create a non-root user for running vLLM securely
 # ------------------------------------------------------------
 
+FROM vllm/vllm-openai:latest
+
 # Create a group named "vllm" with GID 1000, then create a user "vllm"
 # with UID 1000, belonging to that group.
 # The -m flag ensures that a home directory (/home/vllm) is created.
