@@ -1,0 +1,15 @@
+# ------------------------------------------------------------
+# Create a non-root user for running vLLM securely
+# ------------------------------------------------------------
+
+# Create a group named "vllm" with GID 1000, then create a user "vllm"
+# with UID 1000, belonging to that group.
+# The -m flag ensures that a home directory (/home/vllm) is created.
+RUN groupadd -g 1000 vllm && \
+    useradd -m -u 1000 -g 1000 vllm
+
+# Switch to the non-root user for all subsequent commands and entrypoint
+USER vllm
+
+# Optional but recommended: set the working directory to the new user's home
+WORKDIR /home/vllm
