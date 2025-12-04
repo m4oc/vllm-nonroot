@@ -1,4 +1,5 @@
-ChatGPT said:
+# Image url ghcr.io/m4oc/vllm-nonroot
+
 # 🛡️ Non-Root Execution for vLLM Docker Image
 
 ## 🎯 Purpose
