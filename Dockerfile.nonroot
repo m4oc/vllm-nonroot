@@ -5,14 +5,14 @@
 
 FROM vllm/vllm-openai:latest
 
-# Create a group named "vllm" with GID 1000, then create a user "vllm"
-# with UID 1000, belonging to that group.
-# The -m flag ensures that a home directory (/home/vllm) is created.
-RUN groupadd -g 1000 vllm
-RUN useradd -m -u 1000 -g 1000 vllm
+# UID 1000 has no /etc/passwd entry, so $HOME defaults to "/";
+# pin it so vllm/uv write inside /home/vllm as intended.
+ENV HOME=/home/vllm
+ENV HF_HOME=/home/vllm/.cache/huggingface
 
-# Switch to the non-root user for all subsequent commands and entrypoint
-USER 1000
+# GID 0 is load-bearing: upstream only supports arbitrary UIDs
+# that are members of group 0.
+USER 1000:0
 
-# Optional but recommended: set the working directory to the new user's home
 WORKDIR /home/vllm
+EXPOSE 8000
